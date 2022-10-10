@@ -1,6 +1,5 @@
 package CEDProject.demo.entities;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
