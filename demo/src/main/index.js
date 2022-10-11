@@ -1,23 +1,20 @@
 const colors = require('colors');
 // Database Conection...
-const { Client } = require('pg') //controlador client
+const { Pool } = require('pg') //controlador pool
+
+const pool = new Pool({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'postgres',
+    password: '12345',
+    port: 5432,
+});
+
 
 //ejemplo conexion a base de datos
 const ObtenerProfesores = async () => {
-    //
-    const client = new Client({
-        user: 'postgres',
-        host: 'localhost',
-        database: 'postgres',
-        password: '12345',
-        port: 5432,
-    });
-    
-    
-    await client.connect(); // Database Conection... clients ~ database
-    const res = await client.query("select * from profesor");
-    const result = res.rows[0].email;
-    await client.end();
+    const res = await pool.query("select * from profesor");
+    const result = res.rows;
     return result;
 };
 
