@@ -1,3 +1,4 @@
+const colors = require('colors');
 const express = require('express');
 const cors = require('cors');
 
@@ -9,4 +10,5 @@ app.use(express.json());
 
 //routes
 app.listen(4000);
-console.log('Server listening on port 4000');
+console.log('** SERVER READY **'.blue);
+console.log('Server listening on port:'.magenta + ' 4000'.yellow);
