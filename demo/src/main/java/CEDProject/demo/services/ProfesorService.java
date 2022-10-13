@@ -18,8 +18,8 @@ public class ProfesorService {
         return (ArrayList<ProfesorEntity>) profesorRepository.findAll();
     }
 
-    public ProfesorEntity guardarProfesor(ProfesorEntity empleado) {
-        return profesorRepository.save(empleado);
+    public void guardarProfesor(ProfesorEntity empleado) {
+        profesorRepository.save(empleado);
     }
 
     public Optional<ProfesorEntity> obtenerPorId(Long id) {
@@ -34,4 +34,5 @@ public class ProfesorService {
             return false;
         }
     }
+
 }
