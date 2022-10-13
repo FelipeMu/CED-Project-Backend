@@ -16,5 +16,11 @@ const getProfesores = async (req,res) => {
 const getProfesorById = async (req,res) => { 
     const response = await pool.query('SELECT * FROM profesor WHERE id = $1', [req.params.id]);
     res.json(response.rows[0]);
+};
+
+const getAdministradores = async (req,res) => { 
+    const response = await pool.query('SELECT * FROM admin');
+    res.json(response.rows);
 }
-module.exports = {getProfesores, getProfesorById}
+
+module.exports = {getProfesores, getProfesorById, getAdministradores}
