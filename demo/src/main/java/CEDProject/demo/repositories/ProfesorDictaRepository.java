@@ -1,6 +1,5 @@
 package CEDProject.demo.repositories;
 
-import CEDProject.demo.entities.Curso;
 import CEDProject.demo.entities.ProfesorDictaEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -33,7 +32,7 @@ public interface ProfesorDictaRepository extends CrudRepository<ProfesorDictaEnt
     @Query(value = "SELECT pd.id FROM AsignaturaEntity as asig, ProfesorDictaEntity as pd, PlanNivelEntity as pn, ModalidadEntity as md, ProfesorEntity as pr WHERE pr.rut = :rut AND pr.id = pd.id_profesor AND md.id = pd.id_modalidad AND asig.codigo = pd.codigo_asignatura AND asig.codigo = pn.codigo_asignatura")
     ArrayList<Integer> obtenerIdProfeDictaPorRut(@Param("rut")String rut);
 
-    @Query(value = "SELECT DISTINCT pd.id, asig.nombre, asig.horas_semanales, pn.nivel, pd.seccion, md.tipo_modalidad FROM AsignaturaEntity as asig, ProfesorDictaEntity as pd, PlanNivelEntity as pn, ModalidadEntity as md, ProfesorEntity as pr WHERE pr.rut = :rut AND pr.id = pd.id_profesor AND md.id = pd.id_modalidad AND asig.codigo = pd.codigo_asignatura AND asig.codigo = pn.codigo_asignatura")
-    ArrayList<Curso> obtenerCusosPorRut(@Param("rut")String rut);
+    //@Query(value = "SELECT DISTINCT pd.id, asig.nombre, asig.horas_semanales, pn.nivel, pd.seccion, md.tipo_modalidad FROM AsignaturaEntity as asig, ProfesorDictaEntity as pd, PlanNivelEntity as pn, ModalidadEntity as md, ProfesorEntity as pr WHERE pr.rut = :rut AND pr.id = pd.id_profesor AND md.id = pd.id_modalidad AND asig.codigo = pd.codigo_asignatura AND asig.codigo = pn.codigo_asignatura")
+    //ArrayList<Curso> obtenerCusosPorRut(@Param("rut")String rut);
 
 }
