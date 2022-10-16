@@ -17,6 +17,10 @@ const getDatosProfesor = async (req,res) => {
     res.json(response.rows[0]);
 };
 
+const getInformacionProfesor = async (req,res) => {
+    const response = await pool.query('SELECT * FROM profesor WHERE rut = $1', [req.params.rut]);
+    res.json(response.rows[0]);
+};
 
 const getProfesorById = async (req,res) => { 
     const response = await pool.query('SELECT * FROM profesor WHERE id = $1', [req.params.id]);
@@ -33,4 +37,4 @@ const getCursosByRut = async (req, res) => {
     res.json(response.rows);
 };
 
-module.exports = {getProfesores, getDatosProfesor, getProfesorById, getAdministradores, getCursosByRut}
+module.exports = {getProfesores, getDatosProfesor, getInformacionProfesor, getProfesorById, getAdministradores, getCursosByRut}
