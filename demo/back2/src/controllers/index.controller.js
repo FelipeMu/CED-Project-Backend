@@ -2,14 +2,19 @@ const {Pool} = require('pg');
 const pool = new Pool ({
     user: 'postgres',
     host: 'localhost',
-    database: 'CED_BD',
-    password: 'admin',
+    database: 'postgres',
+    password: '12345',
     port: 5432,
  });
 
 const getProfesores = async (req,res) => {
     const response = await pool.query('SELECT * FROM profesor');
     res.json(response.rows);
+};
+
+const getDatosProfesor = async (req,res) => {
+    const response = await pool.query('SELECT * FROM profesor WHERE correo = $1', [req.params.correo]);
+    res.json(response.rows[0]);
 };
 
 
@@ -28,4 +33,4 @@ const getCursosByRut = async (req, res) => {
     res.json(response.rows);
 };
 
-module.exports = {getProfesores, getProfesorById, getAdministradores, getCursosByRut}
+module.exports = {getProfesores, getDatosProfesor, getProfesorById, getAdministradores, getCursosByRut}
