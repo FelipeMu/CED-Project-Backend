@@ -33,7 +33,7 @@ const getAdministradores = async (req,res) => {
 };
 
 const getCursosByRut = async (req, res) => {
-    const response = await pool.query("SELECT DISTINCT pd.id, asig.nombre, asig.horas_semanales, pn.nivel, pd.seccion, md.tipo_modalidad, '2/2022' as periodo FROM asignatura as asig, profesor_dicta as pd, plan_nivel as pn, modalidad as md, profesor as pr WHERE pr.rut = $1 AND pr.id = pd.id_profesor AND md.id = pd.id_modalidad AND asig.codigo = pd.codigo_asignatura AND asig.codigo = pn.codigo_asignatura",[req.params.rut]);
+    const response = await pool.query("SELECT DISTINCT pd.id, asig.nombre, asig.horas_semanales as hrs_semanal, pn.nivel, pd.seccion, md.tipo_modalidad as modalidad, '2/2022' as periodo FROM asignatura as asig, profesor_dicta as pd, plan_nivel as pn, modalidad as md, profesor as pr WHERE pr.rut = $1 AND pr.id = pd.id_profesor AND md.id = pd.id_modalidad AND asig.codigo = pd.codigo_asignatura AND asig.codigo = pn.codigo_asignatura",[req.params.rut]);
     res.json(response.rows);
 };
 
