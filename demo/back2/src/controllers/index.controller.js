@@ -17,8 +17,18 @@ const getDatosProfesor = async (req,res) => {
     res.json(response.rows[0]);
 };
 
+const getDatosAdmin = async (req,res) => {
+    const response = await pool.query('SELECT * FROM admin WHERE correo = $1', [req.params.correo]);
+    res.json(response.rows[0]);
+};
+
 const getInformacionProfesor = async (req,res) => {
     const response = await pool.query('SELECT * FROM profesor WHERE id = $1', [req.params.id]);
+    res.json(response.rows[0]);
+};
+
+const getInformacionAdmin = async (req,res) => {
+    const response = await pool.query('SELECT * FROM admin WHERE id = $1', [req.params.id]);
     res.json(response.rows[0]);
 };
 
@@ -37,4 +47,4 @@ const getCursosById = async (req, res) => {
     res.json(response.rows);
 };
 
-module.exports = {getProfesores, getDatosProfesor, getInformacionProfesor, getProfesorById, getAdministradores, getCursosById}
+module.exports = {getProfesores, getDatosProfesor, getDatosAdmin, getInformacionProfesor, getInformacionAdmin,  getProfesorById, getAdministradores, getCursosById}
