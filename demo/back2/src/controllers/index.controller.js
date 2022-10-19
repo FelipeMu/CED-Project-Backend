@@ -18,7 +18,7 @@ const getDatosProfesor = async (req,res) => {
 };
 
 const getInformacionProfesor = async (req,res) => {
-    const response = await pool.query('SELECT * FROM profesor WHERE rut = $1', [req.params.rut]);
+    const response = await pool.query('SELECT * FROM profesor WHERE id = $1', [req.params.id]);
     res.json(response.rows[0]);
 };
 
@@ -32,9 +32,9 @@ const getAdministradores = async (req,res) => {
     res.json(response.rows);
 };
 
-const getCursosByRut = async (req, res) => {
-    const response = await pool.query("SELECT DISTINCT pd.id, asig.nombre, asig.horas_semanales as hrs_semanal, pn.nivel, pd.seccion, md.tipo_modalidad as modalidad, '2/2022' as periodo FROM asignatura as asig, profesor_dicta as pd, plan_nivel as pn, modalidad as md, profesor as pr WHERE pr.rut = $1 AND pr.id = pd.id_profesor AND md.id = pd.id_modalidad AND asig.codigo = pd.codigo_asignatura AND asig.codigo = pn.codigo_asignatura",[req.params.rut]);
+const getCursosById = async (req, res) => {
+    const response = await pool.query("SELECT DISTINCT pd.id, asig.nombre, asig.horas_semanales as hrs_semanal, pn.nivel, pd.seccion, md.tipo_modalidad as modalidad, '2/2022' as periodo FROM asignatura as asig, profesor_dicta as pd, plan_nivel as pn, modalidad as md, profesor as pr WHERE pd.id_profesor = $1 AND md.id = pd.id_modalidad AND asig.codigo = pd.codigo_asignatura AND asig.codigo = pn.codigo_asignatura",[req.params.id]);
     res.json(response.rows);
 };
 
-module.exports = {getProfesores, getDatosProfesor, getInformacionProfesor, getProfesorById, getAdministradores, getCursosByRut}
+module.exports = {getProfesores, getDatosProfesor, getInformacionProfesor, getProfesorById, getAdministradores, getCursosById}
