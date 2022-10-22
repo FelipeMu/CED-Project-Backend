@@ -52,4 +52,8 @@ const getListaNombreCursosActuales = async (req, res) => {
     res.json(response.rows);
 };
 
-module.exports = {getProfesores, getDatosProfesor, getDatosAdmin, getInformacionProfesor, getInformacionAdmin,  getProfesorById, getAdministradores, getCursosById, getListaNombreCursosActuales}
+const getTiposDeEvaluaciones = async (req,res) => { 
+    const response = await pool.query('SELECT te.tipo FROM tipo_evaluacion as te ORDER BY te.tipo');
+    res.json(response.rows);
+};
+module.exports = {getProfesores, getDatosProfesor, getDatosAdmin, getInformacionProfesor, getInformacionAdmin,  getProfesorById, getAdministradores, getCursosById, getListaNombreCursosActuales, getTiposDeEvaluaciones}
