@@ -47,4 +47,9 @@ const getCursosById = async (req, res) => {
     res.json(response.rows);
 };
 
-module.exports = {getProfesores, getDatosProfesor, getDatosAdmin, getInformacionProfesor, getInformacionAdmin,  getProfesorById, getAdministradores, getCursosById}
+const getListaNombreCursosActuales = async (req, res) => {
+    const response = await pool.query("SELECT DISTINCT asig.nombre FROM asignatura as asig, profesor_dicta as pd, plan_nivel as pn, modalidad as md, profesor as pr WHERE pd.id_profesor = $1 AND md.id = pd.id_modalidad AND asig.codigo = pd.codigo_asignatura AND asig.codigo = pn.codigo_asignatura ORDER BY asig.nombre",[req.params.id]);
+    res.json(response.rows);
+};
+
+module.exports = {getProfesores, getDatosProfesor, getDatosAdmin, getInformacionProfesor, getInformacionAdmin,  getProfesorById, getAdministradores, getCursosById, getListaNombreCursosActuales}
