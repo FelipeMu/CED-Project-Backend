@@ -1,7 +1,23 @@
 const { Router } = require('express');
 const router = Router();
 
-const {getProfesores, getDatosProfesor, getDatosAdmin, getInformacionProfesor, getInformacionAdmin, getProfesorById, getAdministradores, getCursosById, getListaNombreCursosActuales, getTiposDeEvaluaciones, putInformacionAdmin, putInformacionProfesor} = require('../controllers/index.controller.js')
+const {
+    getProfesores, 
+    getDatosProfesor, 
+    getDatosAdmin, 
+    getInformacionProfesor, 
+    getInformacionAdmin, 
+    getProfesorById, 
+    getAdministradores, 
+    getCursosById, 
+    getListaNombreCursosActuales, 
+    getTiposDeEvaluaciones, 
+    createCurso, 
+    putInformacionAdmin, 
+    putInformacionProfesor
+
+    } = require('../controllers/index.controller.js')
+
 router.get('/profesores', getProfesores);//ruta test
 
 router.get('/datosprofesor/:correo', getDatosProfesor); // para inicio sesión profesor(a)
@@ -16,6 +32,8 @@ router.get('/perfilprofesor/:id', getInformacionProfesor); // para ver datos per
 router.get('/perfiladmin/:id', getInformacionAdmin); // para ver datos personales personales--admin
 
 router.get('/tiposevaluaciones', getTiposDeEvaluaciones); // ver listado de los tipo de evaluaciones existentes
+
+router.post('/crearcurso',createCurso); // Crear curso dado un codigo_asignatura existente en la base de datos (falta terminar)
 
 router.put('/update/admin/:id', putInformacionAdmin);
 router.put('/update/profesor/:id', putInformacionProfesor);

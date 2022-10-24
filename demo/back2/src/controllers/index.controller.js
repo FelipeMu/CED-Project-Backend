@@ -57,6 +57,11 @@ const getTiposDeEvaluaciones = async (req, res) => {
     res.json(response.rows);
 };
 
+const createCurso = async (req,res) => { 
+    const response = await pool.query('INSERT INTO profesor_dicta (id, seccion, id_profesor, id_modalidad, codigo_asignatura) VALUES ((SELECT MAX(id)+1 FROM profesor_dicta), $1, $2, $3, $4)', [seccion, id_profesor, id_modalidad, codigo_asignatura]);
+    res.send("¡Curso creado exitosamente!");
+};
+
 const putInformacionAdmin = async(req, res) => {
     const id = req.params.id;
     const {nombre, correo} = req.body;
@@ -91,6 +96,7 @@ module.exports = {
     getCursosById,
     getListaNombreCursosActuales,
     getTiposDeEvaluaciones,
+    createCurso,
     putInformacionAdmin,
     putInformacionProfesor
 }
