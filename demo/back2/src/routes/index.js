@@ -12,9 +12,10 @@ const {
     getCursosById, 
     getListaNombreCursosActuales, 
     getTiposDeEvaluaciones, 
-    createCurso, 
+    //createCurso, 
     putInformacionAdmin, 
-    putInformacionProfesor
+    putInformacionProfesor,
+    getCodigoCurso
 
     } = require('../controllers/index.controller.js')
 
@@ -33,10 +34,13 @@ router.get('/perfiladmin/:id', getInformacionAdmin); // para ver datos personale
 
 router.get('/tiposevaluaciones', getTiposDeEvaluaciones); // ver listado de los tipo de evaluaciones existentes
 
-router.post('/crearcurso',createCurso); // Crear curso dado un codigo_asignatura existente en la base de datos (falta terminar)
+//router.post('/crearcurso',createCurso); // Crear curso dado un codigo_asignatura existente en la base de datos (falta terminar)
 
 router.put('/update/admin/:id', putInformacionAdmin);
 router.put('/update/profesor/:id', putInformacionProfesor);
+
+router.get('/infocursobycod/:codigo', getCodigoCurso); 
+ 
 
 module.exports = router;
 

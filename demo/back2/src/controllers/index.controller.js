@@ -3,7 +3,7 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'postgres',
-    password: '1234',
+    password: '12345',
     port: 5432,
 });
 
@@ -57,10 +57,21 @@ const getTiposDeEvaluaciones = async (req, res) => {
     res.json(response.rows);
 };
 
+/*
 const createCurso = async (req,res) => { 
-    const response = await pool.query('INSERT INTO profesor_dicta (id, seccion, id_profesor, id_modalidad, codigo_asignatura) VALUES ((SELECT MAX(id)+1 FROM profesor_dicta), $1, $2, $3, $4)', [seccion, id_profesor, id_modalidad, codigo_asignatura]);
+    const response = await pool.query('INSERT INTO profesor_dicta (id, seccion, id_profesor, id_modalidad, codigo_asignatura) VALUES ((SELECT MAX(id)+1 FROM profesor_dicta), $1, $2, $3, $4)', [res.seccion, res.id_profesor, res.id_modalidad, res.codigo_asignatura]);
     res.send("¡Curso creado exitosamente!");
 };
+*/
+
+
+const getCodigoCurso = async (req,res) => { 
+    const response = await pool.query('SELECT asig.nombre FROM asignatura as asig WHERE asig.codigo = $1', [req.params.codigo]);
+    //res.send("¡Curso creado exitosamente!");
+    res.json(response.rows[0]);
+};
+
+
 
 const putInformacionAdmin = async(req, res) => {
     const id = req.params.id;
@@ -96,7 +107,8 @@ module.exports = {
     getCursosById,
     getListaNombreCursosActuales,
     getTiposDeEvaluaciones,
-    createCurso,
+    //createCurso,
     putInformacionAdmin,
-    putInformacionProfesor
+    putInformacionProfesor,
+    getCodigoCurso
 }
