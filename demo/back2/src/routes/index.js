@@ -36,7 +36,7 @@ router.get('/tiposevaluaciones', getTiposDeEvaluaciones); // ver listado de los 
 
 router.post('/crearcurso',createCurso); // Crear curso dado un codigo_asignatura existente en la base de datos 
 
-router.put('/update/admin/:id', putInformacionAdmin);
+router.put('/update/admin', putInformacionAdmin);
 router.put('/update/profesor', putInformacionProfesor);
 
 router.get('/infocursobycod/:codigo', getCodigoCurso); 

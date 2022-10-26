@@ -74,14 +74,9 @@ const getCodigoCurso = async (req,res) => {
 
 
 const putInformacionAdmin = async(req, res) => {
-    const id = req.params.id;
-    const {nombre, correo} = req.body;
-    await pool.query('UPDATE FROM admin SET nombre = $1, correo = $2 WHERE id = $3', [
-        nombre,
-        correo,
-        id
-    ])
-    res.send('Usuario administrador actualizado.')
+    const {nombre, correo, id_admin} = req.body;
+    await pool.query('UPDATE admin SET nombre = $1, correo = $2 WHERE admin.id = $3', [nombre, correo, id_admin]);
+    res.send('200');
 
 };
 const putInformacionProfesor = async(req, res) =>{
