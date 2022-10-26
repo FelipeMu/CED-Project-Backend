@@ -85,14 +85,9 @@ const putInformacionAdmin = async(req, res) => {
 
 };
 const putInformacionProfesor = async(req, res) =>{
-    const id = req.params.id;
-    const {nombre, correo} = req.body;
-    await pool.query('UPDATE FROM profesor SET nombre = $1, correo = $2 WHERE id = $3', [
-        nombre,
-        correo,
-        id
-    ])
-    res.send('Usuario profesor actualizado.')
+    const {nombre, correo, id_profesor} = req.body;
+    await pool.query('UPDATE profesor SET nombre = $1, correo = $2 WHERE profesor.id = $3', [nombre, correo, id_profesor]);
+    res.send('200');
 };
 
 
