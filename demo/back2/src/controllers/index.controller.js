@@ -98,8 +98,14 @@ const putInformacionProfesor = async(req, res) =>{
 
 //OBTENER EVALUACIONES PARA MOSTRAR EN EL CALENDARIO
 const getEvaluaciones = async (req,res) => { 
-    const response = await pool.query('SELECT pg.nombre as name, pg.hora_inicio as start, pg.hora_termino as end, pg.detalles as details, (SELECT md.tipo_modalidad as modalidad FROM modalidad as md WHERE md.codigo = pg.id_modalidad), (SELECT te.tipo as tipo_evaluacion FROM tipo_evaluacion as te WHERE te.id = pg.id_tipo_evaluacion), pg.color FROM programar as pg WHERE pg.id_profesor_dicta = $1', [req.params.id_profesor]);
+    const response = await pool.query('SELECT pg.id_programar as idevento, pg.nombre as name, pg.hora_inicio as start, pg.hora_termino as end, pg.detalles as details, (SELECT md.tipo_modalidad as modalidad FROM modalidad as md WHERE md.codigo = pg.id_modalidad), (SELECT te.tipo as tipo_evaluacion FROM tipo_evaluacion as te WHERE te.id = pg.id_tipo_evaluacion), pg.color FROM programar as pg WHERE pg.id_profesor_dicta = $1', [req.params.id_profesor]);
     res.json(response.rows);
+};
+
+//ELIMINAR UN EVENTO DEL CALENDARIO
+const deleteEvento = async (req,res) => { 
+    const response = await pool.query('DELETE FROM programar as pg WHERE pg.id_programar = $1', [req.params.ide]);
+    res.send('Evento eliminado');
 };
 
 
@@ -121,5 +127,6 @@ module.exports = {
     putInformacionProfesor,
     getCodigoCurso,
     getCodigo,
-    getEvaluaciones
+    getEvaluaciones,
+    deleteEvento
 }

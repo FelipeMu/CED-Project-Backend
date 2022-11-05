@@ -18,7 +18,8 @@ const {
     putInformacionProfesor,
     getCodigoCurso,
     getCodigo,
-    getEvaluaciones
+    getEvaluaciones,
+    deleteEvento
     } = require('../controllers/index.controller.js')
 
 router.get('/profesores', getProfesores);//ruta test
@@ -46,6 +47,8 @@ router.get('/infocursobycod/:codigo', getCodigoCurso); //obtener nombre del curs
 router.get('/obtenercodigoynivel/:nombre', getCodigo); //obtener el codigo y nivel de curso dado su nombre
 
 router.get('/obtenerevaluaciones/:id_profesor', getEvaluaciones); //Obtener por ahora las evaluaciones del profesor 
+
+router.delete('/eliminarevento/:ide', deleteEvento); //eliminar un evento (evaluacion o bloqueo de dias) dado su id identificador
  
 
 module.exports = router;
