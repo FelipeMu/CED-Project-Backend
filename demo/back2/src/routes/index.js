@@ -12,11 +12,13 @@ const {
     getCursosById, 
     getListaNombreCursosActuales, 
     getTiposDeEvaluaciones, 
-    createCurso, 
+    createCurso,
+    createEvaluacion,
     putInformacionAdmin, 
     putInformacionProfesor,
-    getCodigoCurso
-
+    getCodigoCurso,
+    getCodigo,
+    getEvaluaciones
     } = require('../controllers/index.controller.js')
 
 router.get('/profesores', getProfesores);//ruta test
@@ -35,11 +37,15 @@ router.get('/perfiladmin/:id', getInformacionAdmin); // para ver datos personale
 router.get('/tiposevaluaciones', getTiposDeEvaluaciones); // ver listado de los tipo de evaluaciones existentes
 
 router.post('/crearcurso',createCurso); // Crear curso dado un codigo_asignatura existente en la base de datos 
+router.post('/crearevaluacion', createEvaluacion); // Añadir una evaluacion al calendario
 
 router.put('/update/admin', putInformacionAdmin);
 router.put('/update/profesor', putInformacionProfesor);
 
-router.get('/infocursobycod/:codigo', getCodigoCurso); 
+router.get('/infocursobycod/:codigo', getCodigoCurso); //obtener nombre del curso dado su codigo
+router.get('/obtenercodigoynivel/:nombre', getCodigo); //obtener el codigo y nivel de curso dado su nombre
+
+router.get('/obtenerevaluaciones/:id_profesor', getEvaluaciones); //Obtener por ahora las evaluaciones del profesor 
  
 
 module.exports = router;

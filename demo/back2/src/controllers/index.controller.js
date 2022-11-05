@@ -1,11 +1,10 @@
 const { Pool } = require('pg');
 const pool = new Pool({
-    //asi no funciona, felipe estuvo aqui
-    //user: 'pingesoft',
-    host: '127.0.0.1',
-    database: 'CED_BD',
-    password: 'Usach.2022'
-    //port: 5432,
+    user: 'postgres',
+    host: 'localhost',
+    database: 'postgres',
+    password: '12345',
+    port: 5432,
 });
 
 const getProfesores = async (req, res) => {
@@ -54,15 +53,22 @@ const getListaNombreCursosActuales = async (req, res) => {
 };
 
 const getTiposDeEvaluaciones = async (req, res) => {
-    const response = await pool.query('SELECT te.tipo FROM tipo_evaluacion as te ORDER BY te.tipo');
+    const response = await pool.query('SELECT tipo_evaluacion.tipo FROM tipo_evaluacion ORDER BY id ASC');
     res.json(response.rows);
 };
 
-
+//CREAR CURSO
 const createCurso = async (req,res) => { 
     const {seccion, id_profesor, id_modalidad, codigo_asignatura} = req.body;
     const response = await pool.query('INSERT INTO profesor_dicta (id, seccion, id_profesor, id_modalidad, codigo_asignatura) VALUES ((SELECT MAX(id)+1 FROM profesor_dicta), $1, $2, $3, $4)', [seccion, id_profesor, id_modalidad, codigo_asignatura]);
     res.send("¡Curso creado exitosamente!");
+};
+
+//CREAR EVALUACION
+const createEvaluacion = async (req,res) => { 
+    const {nombre, hora_inicio, hora_termino, semana, fecha, color, detalles, id_tipo_evaluacion, id_calendario, id_modalidad, codigo_asignatura, id_admin, id_profesor_dicta} = req.body;
+    const response = await pool.query('INSERT INTO programar (nombre, hora_inicio, hora_termino, semana, fecha, color, detalles, id_tipo_evaluacion, id_calendario, id_modalidad, codigo_asignatura, id_admin, id_profesor_dicta) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)', [nombre, hora_inicio, hora_termino, semana, fecha, color, detalles, id_tipo_evaluacion, id_calendario, id_modalidad, codigo_asignatura, id_admin, id_profesor_dicta]);
+    res.send("¡Evaluación añadida exitosamente!");
 };
 
 
@@ -72,6 +78,10 @@ const getCodigoCurso = async (req,res) => {
     res.json(response.rows[0]);
 };
 
+const getCodigo = async (req,res) => { 
+    const response = await pool.query('SELECT pln.codigo_asignatura as codigo, pln.nivel FROM plan_nivel as pln WHERE pln.codigo_asignatura = (SELECT DISTINCT asig.codigo FROM asignatura as asig WHERE asig.nombre = $1 LIMIT 1)', [req.params.nombre]);
+    res.json(response.rows[0]);
+};
 
 
 const putInformacionAdmin = async(req, res) => {
@@ -86,6 +96,13 @@ const putInformacionProfesor = async(req, res) =>{
     res.send('200');
 };
 
+//OBTENER EVALUACIONES PARA MOSTRAR EN EL CALENDARIO
+const getEvaluaciones = async (req,res) => { 
+    const response = await pool.query('SELECT pg.nombre as name, pg.hora_inicio as start, pg.hora_termino as end, pg.detalles, (SELECT md.tipo_modalidad as modalidad FROM modalidad as md WHERE md.codigo = pg.id_modalidad), (SELECT te.tipo as tipo_evaluacion FROM tipo_evaluacion as te WHERE te.id = pg.id_tipo_evaluacion), pg.color FROM programar as pg WHERE pg.id_profesor_dicta = $1', [req.params.id_profesor]);
+    res.json(response.rows);
+};
+
+
 
 module.exports = {
     getProfesores,
@@ -99,7 +116,10 @@ module.exports = {
     getListaNombreCursosActuales,
     getTiposDeEvaluaciones,
     createCurso,
+    createEvaluacion,
     putInformacionAdmin,
     putInformacionProfesor,
-    getCodigoCurso
+    getCodigoCurso,
+    getCodigo,
+    getEvaluaciones
 }
