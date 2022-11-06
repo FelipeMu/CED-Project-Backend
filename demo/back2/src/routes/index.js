@@ -19,7 +19,8 @@ const {
     getCodigoCurso,
     getCodigo,
     getEvaluaciones,
-    deleteEvento
+    deleteEvento,
+    putEvento
     } = require('../controllers/index.controller.js')
 
 router.get('/profesores', getProfesores);//ruta test
@@ -49,6 +50,8 @@ router.get('/obtenercodigoynivel/:nombre', getCodigo); //obtener el codigo y niv
 router.get('/obtenerevaluaciones/:id_profesor', getEvaluaciones); //Obtener por ahora las evaluaciones del profesor 
 
 router.delete('/eliminarevento/:ide', deleteEvento); //eliminar un evento (evaluacion o bloqueo de dias) dado su id identificador
+
+router.put('/actualizarevento', putEvento); //actualizar evento (por ahora solo detalles)
  
 
 module.exports = router;

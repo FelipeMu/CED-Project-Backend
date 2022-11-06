@@ -108,6 +108,14 @@ const deleteEvento = async (req,res) => {
     res.send('Evento eliminado');
 };
 
+//ACTUALIZAR EVENTO
+const putEvento = async(req, res) => {
+    const {id_programar, detalles} = req.body;
+    await pool.query('UPDATE programar SET detalles = $2 WHERE programar.id_programar = $1', [id_programar, detalles]);
+    res.send('evento actualizado');
+
+};
+
 
 
 module.exports = {
@@ -128,5 +136,6 @@ module.exports = {
     getCodigoCurso,
     getCodigo,
     getEvaluaciones,
-    deleteEvento
+    deleteEvento,
+    putEvento
 }
