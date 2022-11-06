@@ -10,7 +10,7 @@ const {
     getProfesorById, 
     getAdministradores, 
     getCursosById, 
-    getListaNombreCursosActuales, 
+    getListaNombreCursosActuales,
     getTiposDeEvaluaciones, 
     createCurso,
     createEvaluacion,
@@ -19,6 +19,7 @@ const {
     getCodigoCurso,
     getCodigo,
     getEvaluaciones,
+    getEventos,
     deleteEvento,
     putEvento
     } = require('../controllers/index.controller.js')
@@ -31,7 +32,8 @@ router.get('/datosadmin/:correo', getDatosAdmin); // para inicio sesión adminis
 router.get('/profesor/:id', getProfesorById);
 router.get('/administradores', getAdministradores);
 router.get('/miscursos/:id', getCursosById); // para vista mis cursos
-router.get('/cursosactuales/:id',getListaNombreCursosActuales); // ver los listado de cursos al momento de ingresar una evaluacion
+
+router.get('/cursosactuales/:id', getListaNombreCursosActuales); // ver los listado de cursos al momento de ingresar una evaluación
 
 router.get('/perfilprofesor/:id', getInformacionProfesor); // para ver datos personales personales--profesor
 router.get('/perfiladmin/:id', getInformacionAdmin); // para ver datos personales personales--admin
@@ -47,7 +49,8 @@ router.put('/update/profesor', putInformacionProfesor);
 router.get('/infocursobycod/:codigo', getCodigoCurso); //obtener nombre del curso dado su codigo
 router.get('/obtenercodigoynivel/:nombre', getCodigo); //obtener el codigo y nivel de curso dado su nombre
 
-router.get('/obtenerevaluaciones/:id_profesor', getEvaluaciones); //Obtener por ahora las evaluaciones del profesor 
+router.get('/obtenerevaluaciones/:id_profesor', getEvaluaciones); //Obtener por ahora las evaluaciones del profesor
+router.get('/obtenereventos/:id_admin', getEventos); //Obtener solo los eventos del administrador
 
 router.delete('/eliminarevento/:ide', deleteEvento); //eliminar un evento (evaluacion o bloqueo de dias) dado su id identificador
 

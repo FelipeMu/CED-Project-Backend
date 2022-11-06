@@ -52,6 +52,7 @@ const getListaNombreCursosActuales = async (req, res) => {
     res.json(response.rows);
 };
 
+
 const getTiposDeEvaluaciones = async (req, res) => {
     const response = await pool.query('SELECT tipo_evaluacion.tipo FROM tipo_evaluacion ORDER BY id ASC');
     res.json(response.rows);
@@ -98,7 +99,13 @@ const putInformacionProfesor = async(req, res) =>{
 
 //OBTENER EVALUACIONES PARA MOSTRAR EN EL CALENDARIO
 const getEvaluaciones = async (req,res) => { 
-    const response = await pool.query('SELECT pg.id_programar as idevento, pg.nombre as name, pg.hora_inicio as start, pg.hora_termino as end, pg.detalles as details, (SELECT md.tipo_modalidad as modalidad FROM modalidad as md WHERE md.codigo = pg.id_modalidad), (SELECT te.tipo as tipo_evaluacion FROM tipo_evaluacion as te WHERE te.id = pg.id_tipo_evaluacion), pg.color FROM programar as pg WHERE pg.id_profesor_dicta = $1', [req.params.id_profesor]);
+    const response = await pool.query('SELECT pg.id_programar as idevento, pg.nombre as name, pg.hora_inicio as start, pg.hora_termino as end, pg.detalles as details, (SELECT md.tipo_modalidad as modalidad FROM modalidad as md WHERE md.codigo = pg.id_modalidad), (SELECT te.tipo as tipo_evaluacion FROM tipo_evaluacion as te WHERE te.id = pg.id_tipo_evaluacion), pg.color FROM programar as pg WHERE (pg.id_profesor_dicta = $1 AND pg.id_admin = 2) OR pg.id_admin = 1', [req.params.id_profesor]);
+    res.json(response.rows);
+};
+
+//OBTENER EVENTOS PARA MOSTRAR EN EL CALENDARIO
+const getEventos= async (req,res) => { 
+    const response = await pool.query('SELECT pg.id_programar as idevento, pg.nombre as name, pg.hora_inicio as start, pg.hora_termino as end, pg.detalles as details, pg.color as color FROM programar as pg WHERE pg.id_admin = $1', [req.params.id_admin]);
     res.json(response.rows);
 };
 
@@ -137,5 +144,6 @@ module.exports = {
     getCodigo,
     getEvaluaciones,
     deleteEvento,
+    getEventos,
     putEvento
 }
