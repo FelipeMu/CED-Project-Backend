@@ -1,10 +1,10 @@
 const { Pool } = require('pg');
 const pool = new Pool({
     user: 'postgres',
-    host: 'localhost',
-    database: 'prueba',
-    password: '12345',
-    port: 5432,
+    host: '170.79.232.136',
+    database: 'CED_BD',
+    password: '1234',
+    port: 5432
 });
 
 const getProfesores = async (req, res) => {
