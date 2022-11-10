@@ -21,7 +21,13 @@ const {
     getEvaluaciones,
     getEventos,
     deleteEvento,
-    putEvento
+    putEvento,
+    getDatosSemestre,
+    createSemestre,
+    deleteSemestre,
+    getEventosDelAdmin,
+    getEventosDelProfesor,
+    getEventosNiveles
     } = require('../controllers/index.controller.js')
 
 router.get('/profesores', getProfesores);//ruta test
@@ -49,13 +55,23 @@ router.put('/update/profesor', putInformacionProfesor);
 router.get('/infocursobycod/:codigo', getCodigoCurso); //obtener nombre del curso dado su codigo
 router.get('/obtenercodigoynivel/:nombre', getCodigo); //obtener el codigo y nivel de curso dado su nombre
 
-router.get('/obtenerevaluaciones/:id_profesor', getEvaluaciones); //Obtener por ahora las evaluaciones del profesor
+router.get('/obtenerevaluaciones/:id', getEvaluaciones); //Obtener por ahora las evaluaciones del profesor
 router.get('/obtenereventos/:id_admin', getEventos); //Obtener solo los eventos del administrador
 
 router.delete('/eliminarevento/:ide', deleteEvento); //eliminar un evento (evaluacion o bloqueo de dias) dado su id identificador
 
 router.put('/actualizarevento', putEvento); //actualizar evento (por ahora solo detalles)
+
+router.get('/informacionsemestre',getDatosSemestre); // Obtener información del semestre//usuario admin
  
+router.post('/crearsemestre', createSemestre); //crear semestre academico
+
+router.delete('/borrarsemestre', deleteSemestre); // borrar programacion del semestre actual
+
+//peticiones para obtener los eventos de ambos tipos de usuarios
+router.get('/eventosdeladmin', getEventosDelAdmin); //para admin
+router.get('/eventosdelprofesor/:id_profesor', getEventosDelProfesor); //para profesor
+router.get('/eventosdelprofesorniveles/:id_profesor', getEventosNiveles); //niveles
 
 module.exports = router;
 
