@@ -134,7 +134,7 @@ const deleteEvento = async (req,res) => {
 const putEvento = async(req, res) => {
     const {id_programar, detalles, start, end} = req.body;
     await pool.query('UPDATE programar SET detalles = $2, hora_inicio = $3, hora_termino = $4 WHERE programar.id_programar = $1', [id_programar, detalles, start, end]);
-    res.send('evento actualizado');
+    res.send('¡Evento actualizado exitosamente!');
 
 };
 
