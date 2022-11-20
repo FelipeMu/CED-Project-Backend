@@ -170,7 +170,7 @@ const getEventosDelAdmin = async (req,res) => {
 
 //PROFESOR
 const getEventosDelProfesor = async (req,res) => { 
-    const response = await pool.query('SELECT DISTINCT pr.id as idevento, pr.nombre as name, pr.hora_inicio as start, pr.hora_termino as end, pr.detalles as details, (SELECT md.tipo_modalidad as modalidad FROM modalidad as md WHERE md.codigo = pr.id_modalidad), (SELECT te.tipo as tipo_evaluacion FROM tipo_evaluacion as te WHERE te.id = pr.id_tipo_evaluacion), pr.color, idss.id_prof as id_profesor FROM (SELECT DISTINCT pr.id as id_pr_prof, pd.id_profesor as id_prof FROM profesor_dicta as pd, plan_nivel as pl, programar as pr WHERE pd.id_profesor = $1 and pd.codigo_asignatura = pl.codigo_asignatura and pd.id = pr.id_profesor_dicta and pr.id_admin = 2) as idss, programar as pr WHERE pr.id = idss.id_pr_prof', [req.params.id_profesor]);
+    const response = await pool.query('SELECT DISTINCT pr.id as idevento, pr.nombre as name, pr.hora_inicio as start, pr.hora_termino as end, pr.detalles as details, (SELECT md.tipo_modalidad as modalidad FROM modalidad as md WHERE md.codigo = pr.id_modalidad), (SELECT te.tipo as tipo_evaluacion FROM tipo_evaluacion as te WHERE te.id = pr.id_tipo_evaluacion), pr.color, idss.id_prof as id_profesor, idss.nivel FROM (SELECT DISTINCT pr.id as id_pr_prof, pd.id_profesor as id_prof, pl.nivel as nivel FROM profesor_dicta as pd, plan_nivel as pl, programar as pr WHERE pd.id_profesor = $1 and pd.codigo_asignatura = pl.codigo_asignatura and pd.id = pr.id_profesor_dicta and pr.id_admin = 2) as idss, programar as pr WHERE pr.id = idss.id_pr_prof', [req.params.id_profesor]);
     res.json(response.rows);
 };
 
