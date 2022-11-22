@@ -181,6 +181,13 @@ const getEventosNiveles= async (req,res) => {
 };
 ///////////////////////////////////////////////////////////
 
+//TRAER EVALUACIONES POR NIVEL // USUARIO: ADMINISTRADOR
+
+const getEvaluacionesPorNivel= async (req,res) => { 
+    const response = await pool.query('SELECT DISTINCT pr.id as idevento, pr.nombre as name, pr.hora_inicio as start, pr.hora_termino as end, pr.detalles as details, (SELECT md.tipo_modalidad as modalidad FROM modalidad as md WHERE md.codigo = pr.id_modalidad),  (SELECT te.tipo as tipo_evaluacion FROM tipo_evaluacion as te WHERE te.id = pr.id_tipo_evaluacion), pr.color, pl.nivel FROM (SELECT DISTINCT pl.nivel as nivel, pl.nivel + 1 as nivelUp, pl.nivel -1 as nivelDown FROM plan_nivel as pl WHERE pl.nivel = $1) as niveles, programar as pr, plan_nivel as pl WHERE pr.id_admin = 2 and pr.codigo_asignatura = pl.codigo_asignatura and (pl.nivel = niveles.nivel or pl.nivel = niveles.nivelUp or pl.nivel = niveles.nivelDown)', [req.params.nivel]);
+    res.json(response.rows);
+};
+
 module.exports = {
     getProfesores,
     getDatosProfesor,
@@ -207,5 +214,6 @@ module.exports = {
     deleteSemestre,
     getEventosDelAdmin,
     getEventosDelProfesor,
-    getEventosNiveles
+    getEventosNiveles,
+    getEvaluacionesPorNivel
 }

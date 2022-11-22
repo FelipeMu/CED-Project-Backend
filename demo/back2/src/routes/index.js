@@ -27,7 +27,8 @@ const {
     deleteSemestre,
     getEventosDelAdmin,
     getEventosDelProfesor,
-    getEventosNiveles
+    getEventosNiveles,
+    getEvaluacionesPorNivel
     } = require('../controllers/index.controller.js')
 
 router.get('/profesores', getProfesores);//ruta test
