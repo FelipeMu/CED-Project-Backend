@@ -69,6 +69,8 @@ router.post('/crearsemestre', createSemestre); //crear semestre academico
 
 router.delete('/borrarsemestre', deleteSemestre); // borrar programacion del semestre actual
 
+router.get('/evaluacionespornivel/:nivel', getEvaluacionesPorNivel); // trae las evaluaciones por nivel, usuario administrador
+
 //peticiones para obtener los eventos de ambos tipos de usuarios
 router.get('/eventosdeladmin', getEventosDelAdmin); //para admin
 router.get('/eventosdelprofesor/:id_profesor', getEventosDelProfesor); //para profesor
